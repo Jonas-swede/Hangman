@@ -9,3 +9,4 @@ Guessed:Guessed letters,Gissade bokstäver
 nrGuesses:Number of guesses,Antal gissningar
 outof:out of,av
 Title:Hangman,Hänga gubbe
+Win:Good job! You guess correctly,Bra jobbat! Du gissade rätt
