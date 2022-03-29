@@ -39,6 +39,7 @@ namespace Hangman
             StringBuilder guessedLetters = new StringBuilder();
             char[] correctLetters = new char[secretWord.Length];
             int guesses = 0;
+            bool correctGuess = false;
             Array.Fill(correctLetters, '_');
 
             while (guesses < numberOfGuesses && correctLetters.Contains('_'))
@@ -61,18 +62,23 @@ namespace Hangman
                     WriteLine("\n{0} : ", Local["Guess"][langSelect]);
                 }
 
-                guessedLetters.Append((guesses == 0 ? null : ",") + guessedLetter);
+                guessedLetters.Append((guessedLetters.Length == 0 ? null : ",") + guessedLetter);
                 for (int i = 0; i < secretWord.Length; i++)
                 {
-                    if (secretWord[i].Equals(guessedLetter)) correctLetters[i] = guessedLetter;
+                    if (secretWord[i].Equals(guessedLetter))
+                    {
+                        correctLetters[i] = guessedLetter;
+                        correctGuess = true;
+                    }
                 }
                 if (!correctLetters.Contains('_'))
                 {
                     ShowUI(correctLetters, guessedLetters, secretWord, Local, langSelect,guesses);
-                    Win();
+                    Win(Local,langSelect);
 
                 }
-                guesses++;
+                if (!correctGuess) guesses++; else correctGuess = false;
+
             }
 
 
@@ -116,10 +122,10 @@ namespace Hangman
             return returnList;
         }
 
-        public static void Win()
+        public static void Win(Dictionary<string,string[]> Local,int langSelect)
         {
 
-            WriteLine("\nGood job! You guess correctly\nPress any button to continue");
+            WriteLine("\n{0}\n{1}",Local["Win"][langSelect], Local["AnyKey"][langSelect]);
             ReadKey();
 
         }
