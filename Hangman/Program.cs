@@ -18,22 +18,18 @@ namespace Hangman
             do
             {
                 Clear();
-                WriteLine("Choose languge\n1.English\n2.Svenska");
-                Int32.TryParse(ReadKey().KeyChar.ToString(), out langSelect);
-                switch (langSelect)
+                Write("Choose language");
+                for (int i=0;i<Local["Languages"].Length;i++)
                 {
-                    case 1:
-                        langSelect--;
-                        break;
-                    case 2:
-                        langSelect--;
-                        break;
-                    default:
-                        langSelect = -1;
-                        break;
-
+                    Write("\n{0}. {1}",i+1, Local["Languages"][i]);
                 }
-
+                Int32.TryParse(ReadKey().KeyChar.ToString(), out langSelect);
+                
+                if(langSelect> Local["Languages"].Length)
+                {
+                    langSelect = -1;
+                }
+                langSelect--;
             } while (langSelect < 0);
             string filePath = System.Environment.CurrentDirectory + Local["FilePath"][langSelect];
             char guessedLetter;
@@ -47,7 +43,7 @@ namespace Hangman
 
             while (guesses < numberOfGuesses && correctLetters.Contains('_'))
             {
-                ShowUI(correctLetters, guessedLetters, secretWord, Local, langSelect);
+                ShowUI(correctLetters, guessedLetters, secretWord, Local, langSelect,guesses);
                 WriteLine("\n{0} : ", Local["Guess"][langSelect]);
                 while (guessedLetters.ToString().Contains(guessedLetter = ReadKey().KeyChar) || !Char.IsLetter(guessedLetter))
                 {
@@ -61,7 +57,7 @@ namespace Hangman
                         WriteLine(Local["AnyKey"][langSelect]);
                     }
                     ReadKey();
-                    ShowUI(correctLetters, guessedLetters, secretWord, Local, langSelect);
+                    ShowUI(correctLetters, guessedLetters, secretWord, Local, langSelect,guesses);
                     WriteLine("\n{0} : ", Local["Guess"][langSelect]);
                 }
 
@@ -72,7 +68,7 @@ namespace Hangman
                 }
                 if (!correctLetters.Contains('_'))
                 {
-                    ShowUI(correctLetters, guessedLetters, secretWord, Local, langSelect);
+                    ShowUI(correctLetters, guessedLetters, secretWord, Local, langSelect,guesses);
                     Win();
 
                 }
@@ -83,7 +79,7 @@ namespace Hangman
 
         }
 
-        static void ShowUI(char[] correctGuesses, StringBuilder guessedLetters, char[] secretWord, Dictionary<string, string[]> Local, int langSelect)
+        static void ShowUI(char[] correctGuesses, StringBuilder guessedLetters, char[] secretWord, Dictionary<string, string[]> Local, int langSelect,int guesses)
         {
             Clear();
             WriteLine("\t\t{0}\n", Local["Title"][langSelect]);
@@ -93,8 +89,10 @@ namespace Hangman
                 Write(c + " ");
             }
             Write("\n{0} : ", Local["Guessed"][langSelect]);
-
             Write(guessedLetters);
+            Write("\n{0} : {1} {2} 10", Local["nrGuesses"][langSelect],guesses, Local["outof"][langSelect]);
+
+            
 
         }
 
