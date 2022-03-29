@@ -1,0 +1,8 @@
+FilePath:\\words.txt,\\Ord.txt
+AnyKey:Press any key to continue,Tryck på någon knapp för att fortsätta
+Err1:You have allready guessed that letter.,Du har redan gissat den bokstaven.
+Err2:You can only guess letters,Du kan bara gissa bokstäver
+Guess:Guess a letter,Gissa en bokstav
+Secret:Secret word,Hemligt ord
+Guessed:Guessed letters,Gissade bokstäver
+Title:Hangman,Hänga gubbe
